@@ -12,11 +12,7 @@ const SERVICES = [
     description: 'Elegant wedding cakes designed for memorable wedding celebrations.',
     image: images.serviceWeddingCake,
   },
-  {
-    name: 'Birthday Cakes',
-    description: 'Beautiful and delicious cakes for children and adults.',
-    image: images.serviceBirthdayCake,
-  },
+ 
   {
     name: 'Pastries & Treats',
     description: 'Different pastries, snacks and sweet treats for events and celebrations.',
@@ -32,11 +28,7 @@ const SERVICES = [
     description: 'Food preparation and catering services for weddings.',
     image: images.serviceWeddingCatering,
   },
-  {
-    name: 'Naming Ceremony',
-    description: 'Catering services for naming ceremonies and family celebrations.',
-    image: images.serviceNamingCeremony,
-  },
+  
   {
     name: 'Birthday / Party Catering',
     description: 'Food and refreshments for birthday parties and social gatherings.',
