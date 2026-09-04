@@ -18,7 +18,7 @@ export const business = {
   whatsappNumber: '2348034426923',
   whatsappMessage:
     'Hello No Limit Living Ventures Ltd, I would like to make an enquiry about your catering and cake services.',
-  email: 'jegededeborah112@gmail.com',
+  email: 'nolimitlivingventureslimited.com',
 }
 
 export const whatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
