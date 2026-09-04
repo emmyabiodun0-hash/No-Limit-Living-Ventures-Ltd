@@ -249,7 +249,7 @@ section {
 
 .navbar__toggle span {
   height: 2px;
-  background: var(--color-blue-deep);
+  background: var(--color-blue);
   border-radius: 2px;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
