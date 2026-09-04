@@ -11,16 +11,8 @@ const CAKES = [
     description: 'Elegant tiered cakes designed around your wedding theme.',
     image: images.cakeWedding,
   },
-  {
-    name: 'Anniversary Cakes',
-    description: 'Cakes made to mark another year of celebration.',
-    image: images.cakeAnniversary,
-  },
-  {
-    name: 'Celebration Cakes',
-    description: 'For graduations, promotions and every milestone.',
-    image: images.cakeCelebration,
-  },
+ 
+  
   {
     name: 'Custom Cakes',
     description: 'A design built around your theme, colours and taste.',
