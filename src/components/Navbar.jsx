@@ -3,7 +3,9 @@ import { business } from '../siteData'
 
 const NAV_LINKS = [
   { href: '#top', label: 'Home' },
-  { href: '#about', label: 'About' },
+  { href: '#about', label: 'About Us' },
+  { href: '#videos', label: 'Our Videos' },
+  { href: '#training', label: 'Training' },
   { href: '#services', label: 'Services' },
   { href: '#cakes', label: 'Cakes' },
   { href: '#catering', label: 'Catering' },
@@ -11,6 +13,10 @@ const NAV_LINKS = [
   { href: '#booking', label: 'Book Us' },
   { href: '#contact', label: 'Contact' },
 ]
+
+// The gold "Book Us" button already sits in the bar on desktop, so the
+// desktop link list leaves out the duplicate text link (mobile menu keeps it).
+const DESKTOP_LINKS = NAV_LINKS.filter((link) => link.href !== '#booking')
 
 function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -32,12 +38,12 @@ function Navbar() {
     <header className={`navbar ${isScrolled ? 'navbar--scrolled' : ''}`}>
       <div className="navbar__inner">
         <a href="#top" className="navbar__brand" onClick={handleLinkClick}>
-          <img src="./logo.png" alt={`${business.name} logo`} className="navbar__logo-img" />
+          <img src="/logo.png" alt={`${business.name} logo`} className="navbar__logo-img" />
           <span className="navbar__brand-name">{business.name}</span>
         </a>
 
         <nav className="navbar__links navbar__links--desktop" aria-label="Primary">
-          {NAV_LINKS.map((link) => (
+          {DESKTOP_LINKS.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}
             </a>

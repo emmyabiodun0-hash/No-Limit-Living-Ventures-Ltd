@@ -1,0 +1,263 @@
+/* ---- APPEND THIS TO THE BOTTOM OF YOUR src/index.css ---- */
+/* ============================================================
+   Gold button variant
+   ============================================================ */
+
+.button--gold {
+  background: var(--color-gold);
+  color: var(--color-blue-deep);
+  box-shadow: 0 12px 24px -14px rgba(201, 154, 46, 0.7);
+}
+
+.button--gold:hover {
+  background: #b58726;
+}
+
+/* ============================================================
+   Video player (shared)
+   ============================================================ */
+
+.video-player {
+  margin: 0;
+  width: 100%;
+}
+
+.video-player__video,
+.video-player__missing {
+  display: block;
+  width: 100%;
+  max-height: 78vh;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-gold);
+  background: var(--color-blue-deep);
+  box-shadow: var(--shadow-soft);
+}
+
+.video-player__video {
+  object-fit: contain;
+}
+
+.video-player__missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  text-align: center;
+  min-height: 200px;
+}
+
+.video-player__missing p,
+.training__flyer-missing p {
+  color: var(--color-gold-soft);
+  margin: 0 auto;
+  font-size: 0.92rem;
+}
+
+.video-player__missing code,
+.training__flyer-missing code {
+  font-size: 0.85em;
+  word-break: break-all;
+}
+
+.video-player__caption {
+  margin-top: 0.75rem;
+  font-size: 0.88rem;
+  color: var(--color-ink-soft);
+}
+
+/* ============================================================
+   Company video ("Meet ...")
+   ============================================================ */
+
+.company-video {
+  padding: 6rem 1.5rem;
+  background: var(--color-bg-soft);
+}
+
+.company-video__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.company-video__intro h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.company-video__subtitle {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-gold);
+}
+
+.company-video__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: 1.75rem;
+}
+
+/* ============================================================
+   Training
+   ============================================================ */
+
+.training {
+  padding: 6rem 1.5rem;
+  background: var(--color-blue-deep);
+}
+
+.training__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.training__intro {
+  max-width: 60ch;
+  margin-bottom: 2.5rem;
+}
+
+.training__intro h2 {
+  color: var(--color-cream);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+}
+
+.training__intro p {
+  color: rgba(255, 253, 248, 0.78);
+}
+
+.training__layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.training .video-player__caption {
+  color: rgba(255, 253, 248, 0.7);
+}
+
+.training__details {
+  margin: 1.75rem 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(201, 154, 46, 0.45);
+  border-radius: var(--radius-md);
+}
+
+.training__details div:nth-child(1),
+.training__details div:nth-child(2) {
+  grid-column: 1 / -1;
+}
+
+.training__details dt {
+  font-size: 0.75rem;
+  color: var(--color-gold);
+  margin-bottom: 0.2rem;
+}
+
+.training__details dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--color-cream);
+}
+
+.training__register {
+  width: 100%;
+  padding: 1rem 1.7rem;
+  font-size: 1.05rem;
+}
+
+.training__flyer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.training__flyer-button {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 2px solid var(--color-gold);
+  border-radius: var(--radius-md);
+  background: none;
+  cursor: zoom-in;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease;
+}
+
+.training__flyer-button:hover {
+  transform: translateY(-3px);
+}
+
+/* Flyer keeps its original proportions: width fills, height follows, no crop */
+.training__flyer-button img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.training__flyer-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: rgba(255, 253, 248, 0.6);
+}
+
+.training__flyer .button--ghost {
+  color: var(--color-cream);
+  border-color: rgba(255, 253, 248, 0.35);
+}
+
+.training__flyer .button--ghost:hover {
+  color: var(--color-gold);
+  border-color: var(--color-gold);
+}
+
+.training__flyer-missing {
+  width: 100%;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border: 2px dashed rgba(201, 154, 46, 0.6);
+  border-radius: var(--radius-md);
+}
+
+/* Enlarged flyer should never be cropped either */
+.lightbox img {
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .company-video__inner,
+  .training__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .training__flyer {
+    max-width: 480px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 640px) {
+  .company-video,
+  .training {
+    padding: 3.75rem 1.25rem;
+  }
+
+  .company-video__actions .button {
+    width: 100%;
+  }
+
+  .training__details {
+    grid-template-columns: 1fr;
+    padding: 1.25rem;
+  }
+}

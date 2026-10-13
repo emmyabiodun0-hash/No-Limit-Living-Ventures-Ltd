@@ -2,7 +2,9 @@ import { business, whatsappLink } from '../siteData'
 
 const FOOTER_LINKS = [
   { href: '#top', label: 'Home' },
-  { href: '#about', label: 'About' },
+  { href: '#about', label: 'About Us' },
+  { href: '#videos', label: 'Our Videos' },
+  { href: '#training', label: 'Training' },
   { href: '#services', label: 'Services' },
   { href: '#cakes', label: 'Cakes' },
   { href: '#catering', label: 'Catering' },
@@ -22,7 +24,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer__inner">
         <div className="footer__brand">
-          <img src="./logo.png" alt={`${business.name} logo`} className="footer__logo-img" />
+          <img src="/logo.png" alt={`${business.name} logo`} className="footer__logo-img" />
           <span className="footer__logo-name">{business.name}</span>
           <p>
             Quality cakes, delicious meals and professional catering

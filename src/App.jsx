@@ -1,6 +1,8 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import CompanyVideo from './components/CompanyVideo'
+import Training from './components/Training'
 import Services from './components/Services'
 import Cakes from './components/Cakes'
 import Catering from './components/Catering'
@@ -18,6 +20,8 @@ function App() {
       <main>
         <Hero />
         <About />
+        <CompanyVideo />
+        <Training />
         <Services />
         <Cakes />
         <Catering />

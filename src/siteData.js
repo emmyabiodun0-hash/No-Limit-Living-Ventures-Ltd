@@ -56,3 +56,28 @@ export const images = {
   galleryFive: 'https://i.pinimg.com/736x/f7/02/79/f70279b0e41a921f5871d10fcb7aa0b8.jpg',
   gallerySix: 'https://i.pinimg.com/1200x/31/7b/f2/317bf2b3b21b2e884abb44bebc9eadc3.jpg',
 }
+
+// ------------------------------------------------------------------
+// Your own media files (served from the /public folder).
+// If a filename or extension differs, change it here — nothing else.
+// ------------------------------------------------------------------
+export const media = {
+  trainingVideo: '/videos/training-advert.mp4',
+  companyVideo: '/videos/company-introduction.mp4',
+  // Your flyer's real filename has spaces, so it is URL-encoded here.
+  trainingFlyer: `/flyers/${encodeURIComponent('WhatsApp Image 2026-10-12 at 07.59.33.jpeg')}`,
+}
+
+export const training = {
+  company: 'No Limit Living Ventures Ltd.',
+  programme: '3-Day Live & Direct Snacks and Pastries Training',
+  dates: 'November 12–14, 2026',
+  firstBatch: '9 AM – 1 PM',
+  secondBatch: '1 PM – 5 PM',
+  registerMessage:
+    'Hello No Limit Living Ventures Ltd., I watched your Snacks and Pastries Training advertisement and would like to register for the training from November 12–14, 2026. Please send me the registration details.',
+}
+
+export const trainingRegisterLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
+  training.registerMessage,
+)}`
