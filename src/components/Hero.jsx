@@ -5,7 +5,7 @@ function Hero() {
     <section id="top" className="hero">
       <div className="hero__inner">
         <div className="hero__copy">
-          <img src="./logo.png" alt={`${business.name} logo`} className="hero__logo" />
+          <img src="/logo.png" alt={`${business.name} logo`} className="hero__logo" />
 
           <h1>Delicious Moments, Beautifully Made</h1>
           <p className="hero__lede">

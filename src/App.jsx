@@ -12,8 +12,10 @@ import Contact from './components/Contact'
 import Map from './components/Map'
 import WhatsAppButton from './components/WhatsAppButton'
 import Footer from './components/Footer'
+import Registration from './components/Registration'
+import { usePathname } from './router'
 
-function App() {
+function LandingPage() {
   return (
     <>
       <Navbar />
@@ -31,6 +33,16 @@ function App() {
         <Map />
       </main>
       <Footer />
+    </>
+  )
+}
+
+function App() {
+  const pathname = usePathname()
+
+  return (
+    <>
+      {pathname === '/training/register' ? <Registration /> : <LandingPage />}
       <WhatsAppButton />
     </>
   )

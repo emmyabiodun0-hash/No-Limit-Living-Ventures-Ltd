@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import VideoPlayer from './VideoPlayer'
+import { Link } from '../router'
 import { media, training, trainingRegisterLink } from '../siteData'
 
 function Training() {
@@ -97,14 +98,10 @@ function Training() {
               </div>
             </dl>
 
-            <a
-              href={trainingRegisterLink}
-              target="_blank"
-              rel="noreferrer"
-              className="button button--gold training__register"
-            >
-              Register for Training
-            </a>
+            <Link to="/training/register" className="button button--gold training__register">
+              REGISTER FOR TRAINING
+            </Link>
+            
           </div>
         </div>
       </div>

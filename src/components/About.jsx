@@ -6,7 +6,7 @@ function About() {
       <div className="about__inner">
         <div className="about__visual">
           <div className="about__photo-frame">
-            <img src="./mypic.png" alt={`${business.name} founder`} />
+            <img src="/mypic.png" alt={`${business.name} founder`} />
           </div>
         </div>
 

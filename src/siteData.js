@@ -81,3 +81,71 @@ export const training = {
 export const trainingRegisterLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
   training.registerMessage,
 )}`
+
+// ------------------------------------------------------------------
+// Training registration (page: /training/register)
+// Everything the registration form needs lives here, in one place.
+// ------------------------------------------------------------------
+export const registration = {
+  // The ONLY place the Formspree endpoint is written.
+  formspreeEndpoint: 'https://formspree.io/f/xzedjdwl',
+
+  trainingName: training.programme,
+  trainingDates: training.dates,
+  fee: 20000,
+  feeDisplay: '₦20,000',
+
+  batches: [
+    { label: 'Batch 1', time: '9:00 AM–1:00 PM' },
+    { label: 'Batch 2', time: '1:00 PM–5:00 PM' },
+  ],
+
+  phones: {
+    primary: business.phoneRaw, // 08034426923
+    primaryHref: business.phoneHref,
+    alternative: '08145479336',
+    alternativeHref: 'tel:+2348145479336',
+  },
+
+  // DEMO details — replace before publishing, then set isDemo to false
+  // to hide the warning banner on the form.
+  bank: {
+    isDemo: true,
+    bankName: 'Example Bank',
+    accountName: 'NO LIMIT LIVING VENTURES LTD.',
+    accountNumber: '0000000000',
+  },
+
+  // Upload rules (checked in the browser before anything is sent).
+  // Formspree itself allows up to 25 MB per file; these are lower on purpose.
+  files: {
+    passport: {
+      maxMB: 5,
+      types: ['image/jpeg', 'image/png', 'image/webp'],
+      extensions: ['jpg', 'jpeg', 'png', 'webp'],
+      readable: 'JPG, JPEG, PNG or WEBP',
+    },
+    receipt: {
+      maxMB: 5,
+      types: ['image/jpeg', 'image/png', 'application/pdf'],
+      extensions: ['jpg', 'jpeg', 'png', 'pdf'],
+      readable: 'JPG, JPEG, PNG or PDF',
+    },
+  },
+
+  // Opens WhatsApp after a successful submission. Contains NO personal
+  // details and no file contents.
+  whatsappMessage: `Hello No Limit Living Ventures Ltd., I have just submitted my registration for the ${training.programme} (${training.dates}). I can provide my registration details if needed.`,
+}
+
+export const registrationWhatsappLink = `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(
+  registration.whatsappMessage,
+)}`
+
+export const nigerianStates = [
+  'Abia', 'Adamawa', 'Akwa Ibom', 'Anambra', 'Bauchi', 'Bayelsa', 'Benue', 'Borno',
+  'Cross River', 'Delta', 'Ebonyi', 'Edo', 'Ekiti', 'Enugu', 'FCT (Abuja)', 'Gombe',
+  'Imo', 'Jigawa', 'Kaduna', 'Kano', 'Katsina', 'Kebbi', 'Kogi', 'Kwara', 'Lagos',
+  'Nasarawa', 'Niger', 'Ogun', 'Ondo', 'Osun', 'Oyo', 'Plateau', 'Rivers', 'Sokoto',
+  'Taraba', 'Yobe', 'Zamfara',
+]

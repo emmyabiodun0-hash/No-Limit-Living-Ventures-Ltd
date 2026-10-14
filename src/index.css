@@ -1523,3 +1523,20 @@ iframe {
     padding: 1.25rem;
   }
 }
+
+/* Secondary "register via WhatsApp" link under the main training button */
+.training__whatsapp-link {
+  display: block;
+  margin-top: 0.9rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(255, 253, 248, 0.85);
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+  text-underline-offset: 4px;
+}
+
+.training__whatsapp-link:hover {
+  color: var(--color-gold);
+}
