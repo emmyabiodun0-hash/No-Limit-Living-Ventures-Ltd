@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { business, nigerianStates, registration } from '../siteData'
 import { Link, navigate } from '../router'
+import { generateRegistrationNumber } from '../registrationNumber'
 import {
   PAYMENT_MADE,
   PAYMENT_NOT_PAID,
@@ -145,11 +146,21 @@ function Registration() {
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle') // idle | sent
   const [copied, setCopied] = useState(false)
+  // The shared registration number from Supabase. Requested once per active form,
+  // then reused for WhatsApp, "Open WhatsApp again" and "Copy my details".
+  const [registrationNumber, setRegistrationNumber] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
+  const [popupBlocked, setPopupBlocked] = useState(false)
+  const submittingRef = useRef(false) // blocks rapid double-clicks before React re-renders
   const topRef = useRef(null)
 
   const isLastStep = step === STEPS.length - 1
   const paymentMade = values.payment_status === PAYMENT_MADE
   const today = todayISO()
+
+  // The form values plus the generated number (empty until the number exists).
+  const valuesWithNumber = { ...values, registration_number: registrationNumber }
 
   function setValue(name, value) {
     setValues((previous) => ({ ...previous, [name]: value }))
@@ -179,9 +190,12 @@ function Registration() {
     goToStep(step + 1)
   }
 
-  // Opens WhatsApp with the whole registration typed in. The trainee still has
-  // to press Send there, so the page never says the registration was "received".
-  function handleSendOnWhatsApp() {
+  // Validates the form, gets ONE registration number from Supabase, then opens
+  // WhatsApp with the whole registration typed in. The trainee still has to press
+  // Send there, so the page never says the registration was "received".
+  async function handleSendOnWhatsApp() {
+    if (submittingRef.current) return
+
     const allErrors = validateAll(values)
     if (Object.keys(allErrors).length) {
       setErrors(allErrors)
@@ -192,9 +206,54 @@ function Registration() {
       return
     }
 
-    window.open(buildWhatsAppUrl(values), '_blank', 'noopener,noreferrer')
-    setStatus('sent')
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    setSubmitError('')
+
+    // Number already generated for this form: reuse it, never ask Supabase again.
+    if (registrationNumber) {
+      const opened = window.open(buildWhatsAppUrl(valuesWithNumber), '_blank', 'noopener,noreferrer')
+      setPopupBlocked(!opened)
+      setStatus('sent')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+
+    submittingRef.current = true
+    setIsSubmitting(true)
+
+    // Browsers block window.open() after an await, so open a blank tab now,
+    // while we are still inside the click, and point it at WhatsApp afterwards.
+    const popup = window.open('', '_blank')
+    if (popup) {
+      try {
+        popup.opener = null
+        popup.document.title = 'Opening WhatsApp…'
+        popup.document.body.textContent = 'Preparing your WhatsApp message…'
+      } catch {
+        // Cosmetic only — ignore.
+      }
+    }
+
+    try {
+      const number = await generateRegistrationNumber()
+      setRegistrationNumber(number)
+
+      const url = buildWhatsAppUrl({ ...values, registration_number: number })
+      if (popup && !popup.closed) {
+        popup.location.href = url
+        setPopupBlocked(false)
+      } else {
+        // Tab was blocked or closed: the success screen has a working button.
+        setPopupBlocked(true)
+      }
+      setStatus('sent')
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    } catch (error) {
+      if (popup && !popup.closed) popup.close()
+      setSubmitError(error?.message || 'Unable to generate your registration number. Please try again.')
+    } finally {
+      submittingRef.current = false
+      setIsSubmitting(false)
+    }
   }
 
   function handleFormSubmit(event) {
@@ -205,7 +264,7 @@ function Registration() {
 
   async function copyDetails() {
     try {
-      await navigator.clipboard.writeText(buildWhatsAppMessage(values))
+      await navigator.clipboard.writeText(buildWhatsAppMessage(valuesWithNumber))
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2500)
     } catch {
@@ -235,7 +294,7 @@ function Registration() {
   // After pressing "Send registration on WhatsApp"
   // ------------------------------------------------------------------
   if (status === 'sent') {
-    const url = buildWhatsAppUrl(values)
+    const url = buildWhatsAppUrl(valuesWithNumber)
     return (
       <div className="reg-page">
         {header}
@@ -249,6 +308,17 @@ function Registration() {
               WhatsApp should have opened with your registration details already typed in. Your registration is only
               received once you press <strong>Send</strong> on that message.
             </p>
+
+            {registrationNumber && (
+              <p className="reg-info">
+                Your registration number: <strong>{registrationNumber}</strong>
+              </p>
+            )}
+            {popupBlocked && (
+              <p className="reg-info">
+                Your browser did not open WhatsApp automatically. Tap <strong>OPEN WHATSAPP AGAIN</strong> below.
+              </p>
+            )}
 
             <div className="reg-next">
               <h2>Then send these in the same WhatsApp chat</h2>
@@ -580,6 +650,16 @@ function Registration() {
               {paymentMade ? ' and payment receipt' : ''} in the same chat.
             </p>
 
+            <p className="reg-info">
+              {registrationNumber ? (
+                <>
+                  Your registration number: <strong>{registrationNumber}</strong>
+                </>
+              ) : (
+                'Your registration number is generated when you press the button below, so it does not appear on this page yet.'
+              )}
+            </p>
+
             <div className="reg-review">
               <ReviewSection title="Personal information" onEdit={() => goToStep(0)}>
                 <ReviewRow label="Full name" value={values.full_name} />
@@ -629,6 +709,12 @@ function Registration() {
             </div>
           </section>
 
+          {isLastStep && submitError && (
+            <div className="reg-alert" role="alert">
+              <p>{submitError}</p>
+            </div>
+          )}
+
           {/* ---------- Navigation buttons ---------- */}
           <div className="reg-actions">
             {step > 0 && !isLastStep && (
@@ -637,7 +723,12 @@ function Registration() {
               </button>
             )}
             {isLastStep && (
-              <button type="button" className="reg-btn reg-btn--outline" onClick={() => goToStep(0)}>
+              <button
+                type="button"
+                className="reg-btn reg-btn--outline"
+                onClick={() => goToStep(0)}
+                disabled={isSubmitting}
+              >
                 ← Back to form
               </button>
             )}
@@ -646,8 +737,8 @@ function Registration() {
                 Continue →
               </button>
             ) : (
-              <button type="submit" className="reg-btn reg-btn--gold">
-                SEND REGISTRATION ON WHATSAPP
+              <button type="submit" className="reg-btn reg-btn--gold" disabled={isSubmitting} aria-busy={isSubmitting}>
+                {isSubmitting ? 'GENERATING REGISTRATION NUMBER...' : 'SEND REGISTRATION ON WHATSAPP'}
               </button>
             )}
           </div>

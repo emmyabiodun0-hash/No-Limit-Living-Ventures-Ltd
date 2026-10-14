@@ -111,9 +111,9 @@ export const registration = {
   // to hide the warning banner on the form.
   bank: {
     isDemo: true,
-    bankName: 'Example Bank',
-    accountName: 'NO LIMIT LIVING VENTURES LTD.',
-    accountNumber: '0000000000',
+    bankName: 'ZENITH BANK',
+    accountName: 'DEBORAH OLUWATOSIN AROGUNDADE',
+    accountNumber: '2433063768',
   },
 
   // Upload rules (checked in the browser before anything is sent).

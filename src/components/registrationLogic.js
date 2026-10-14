@@ -178,6 +178,7 @@ export function buildWhatsAppMessage(values) {
   }
 
   lines.push('*TRAINING REGISTRATION*')
+  add('Registration Number', values.registration_number)
   lines.push(`Training: ${registration.trainingName}`)
   lines.push(`Dates: ${registration.trainingDates}`)
   lines.push(`Fee: ${registration.feeDisplay}`)
